@@ -4,10 +4,13 @@ const app = express();
 const User = require("./src/User.model");
 const connectDb = require("./src/connection");
 const cors = require('cors');
+const bodyParser = require('body-parser');
 
 const PORT = 8080;
 
 app.use(cors());
+//app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/users", async (req, res) => {
     const users = await User.find();
@@ -15,10 +18,12 @@ app.get("/users", async (req, res) => {
     res.json(users);
 });
 
-app.get("/user-create", async (req, res) => {
-    const user = new User({ username: "userTest" });
+app.post("/user-create", async (req, res) => {
+    console.log("test: " + req.body.name);  
 
-    await user.save().then(() => console.log("User created"));
+    const user = new User({ username: req.body.name });
+
+    await user.save().then(() => console.log("User created"));  
 
     res.send("User created \n");
 });

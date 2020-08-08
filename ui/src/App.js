@@ -17,8 +17,8 @@ function App() {
     setUsers(res.data);
     console.log(res.data)
   };
-  const createUser = async () => {
-    await axios.get(apiUrl + '/user-create');
+  const createUser = async (name) => {
+    await axios.get(apiUrl + '/user-create/name:' + name);
     fetchData();
   }
 
@@ -27,8 +27,8 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <button onClick={() => createUser()}>Create User</button>
-        <p>Users list:</p>
+        <button onClick={() => createUser("shawn")}>Create User</button>
+        <p>Master Users list:</p>
         <ul>
           {users.map(user => (
             <li key={user._id}>id: {user._id}</li>
